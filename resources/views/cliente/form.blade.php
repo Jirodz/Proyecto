@@ -12,9 +12,9 @@
             {!! $errors->first('razon_social', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('dpi') }}
-            {{ Form::text('dpi', $cliente->dpi, ['class' => 'form-control' . ($errors->has('dpi') ? ' is-invalid' : ''), 'placeholder' => 'Dpi']) }}
-            {!! $errors->first('dpi', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('encargado') }}
+            {{ Form::text('encargado', $cliente->encargado, ['class' => 'form-control' . ($errors->has('encargado') ? ' is-invalid' : ''), 'placeholder' => 'Encargado']) }}
+            {!! $errors->first('encargado', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('numero_telefono') }}

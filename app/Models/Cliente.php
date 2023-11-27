@@ -10,12 +10,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property $id
  * @property $nombre
  * @property $razon_social
- * @property $dpi
+ * @property $encargado
  * @property $numero_telefono
  * @property $created_at
  * @property $updated_at
  *
- * @property Locale[] $locales
+ * @property Enlace[] $enlaces
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -25,7 +25,6 @@ class Cliente extends Model
     static $rules = [
 		'nombre' => 'required',
 		'razon_social' => 'required',
-		'dpi' => 'required',
 		'numero_telefono' => 'required',
     ];
 
@@ -36,15 +35,15 @@ class Cliente extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre','razon_social','dpi','numero_telefono'];
+    protected $fillable = ['nombre','razon_social','encargado','numero_telefono'];
 
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function locales()
+    public function enlaces()
     {
-        return $this->hasMany('App\Models\Locale', 'cliente_id', 'id');
+        return $this->hasMany('App\Models\Enlace', 'cliente_id', 'id');
     }
     
 

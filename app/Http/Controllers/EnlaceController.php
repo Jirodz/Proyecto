@@ -3,11 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enlace;
-use App\Models\Establecimiento;
-use App\Models\Cliente;
-use App\Models\Locale;
-use App\Models\Odf;
-use App\Models\Port;
 use Illuminate\Http\Request;
 
 /**
@@ -21,51 +16,23 @@ class EnlaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-public function index()
-{
-    
-    // Obtener el establecimiento seleccionado (ajusta esta lógica según tu aplicación)
-    $selectedEstablecimientoId = request('establecimiento_id');
-    $selectedEstablecimiento = !empty($selectedEstablecimientoId);
+    public function index()
+    {
+        $enlaces = Enlace::paginate();
 
-    // Obtener la lista de enlaces filtrada por el establecimiento seleccionado
-    $enlaces = $selectedEstablecimiento
-        ? Enlace::where('establecimiento_id', $selectedEstablecimientoId)->paginate()
-        : Enlace::paginate();
-
-    // Obtener la lista de establecimientos
-    $establecimientos = Establecimiento::pluck('nombre_establecimiento', 'id');
-
-    return view('enlace.index', compact('enlaces', 'establecimientos', 'selectedEstablecimiento'))
-        ->with('i', (request()->input('page', 1) - 1) * $enlaces->perPage());
-}
-
-    
-    
+        return view('enlace.index', compact('enlaces'))
+            ->with('i', (request()->input('page', 1) - 1) * $enlaces->perPage());
+    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        // Obtener el ID del establecimiento del parámetro o formulario
-        $establecimientoId = $request->input('establecimiento_id');
         $enlace = new Enlace();
-        // Obtener el establecimiento correspondiente al ID actual
-        $establecimiento = Establecimiento::find($establecimientoId);
-    
-        // Si no se proporciona un ID, puedes ajustar esto según tus necesidades
-        $establecimientos = $establecimiento ? [$establecimientoId => $establecimiento->nombre_establecimiento] : [];
-    
-        $clientes = Cliente::pluck('nombre','id');
-        // Filtrar los locales por el ID del establecimiento
-        $locales = Locale::where('establecimiento_id', $establecimientoId)->pluck('numero_local', 'id');
-        // Filtrar los ODFs por el ID del establecimiento
-        $odfs = Odf::where('establecimiento_id', $establecimientoId)->pluck('nombre_odf', 'id');
-        $ports = Port::pluck('numero_puerto','id');
-        return view('enlace.create', compact('enlace','establecimientos','clientes','locales','odfs','ports'));
+        return view('enlace.create', compact('enlace'));
     }
 
     /**
@@ -76,7 +43,10 @@ public function index()
      */
     public function store(Request $request)
     {
-        request()->validate(Enlace::$rules);
+            // Excluir el campo 'fecha' de las reglas de validación
+    $rulesWithoutFecha = array_diff_key(Enlace::$rules, ['fecha' => '']);
+
+    $this->validate($request, $rulesWithoutFecha);
 
         $enlace = Enlace::create($request->all());
 
@@ -106,13 +76,8 @@ public function index()
     public function edit($id)
     {
         $enlace = Enlace::find($id);
-        $establecimientos = Establecimiento::pluck('nombre_establecimiento','id');
-        $clientes = Cliente::pluck('nombre','id');
-        $locales = Locale::pluck('numero_local','id');
-        $odfs = Odf::pluck('nombre_odf','id');
-        $ports = Port::pluck('numero_puerto','id');
 
-        return view('enlace.edit', compact('enlace','establecimientos','clientes','locales','odfs','ports'));
+        return view('enlace.edit', compact('enlace'));
     }
 
     /**

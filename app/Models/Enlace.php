@@ -13,11 +13,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property $nombre_contacto
  * @property $telefono
  * @property $nivel
+ * @property $tipo_id
  * @property $cliente_id
  * @property $establecimiento_id
  * @property $local_id
  * @property $odf_id
  * @property $port_id
+ * @property $responsable_operador
+ * @property $dpi_responsable
+ * @property $telefono_responsable
+ * @property $fecha
  * @property $created_at
  * @property $updated_at
  *
@@ -28,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Log[] $logs
  * @property Odf $odf
  * @property Port $port
+ * @property Tipo $tipo
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -40,11 +46,16 @@ class Enlace extends Model
 		'nombre_contacto' => 'required',
 		'telefono' => 'required',
 		'nivel' => 'required',
+		'tipo_id' => 'required',
 		'cliente_id' => 'required',
 		'establecimiento_id' => 'required',
 		'local_id' => 'required',
 		'odf_id' => 'required',
 		'port_id' => 'required',
+		'responsable_operador' => 'required',
+		'dpi_responsable' => 'required',
+		'telefono_responsable' => 'required',
+		'fecha' => 'required',
     ];
 
     protected $perPage = 20;
@@ -54,7 +65,7 @@ class Enlace extends Model
      *
      * @var array
      */
-    protected $fillable = ['actividad','negocio','nombre_contacto','telefono','nivel','cliente_id','establecimiento_id','local_id','odf_id','port_id'];
+    protected $fillable = ['actividad','negocio','nombre_contacto','telefono','nivel','tipo_id','cliente_id','establecimiento_id','local_id','odf_id','port_id','responsable_operador','dpi_responsable','telefono_responsable','fecha'];
 
 
     /**
@@ -111,6 +122,14 @@ class Enlace extends Model
     public function port()
     {
         return $this->hasOne('App\Models\Port', 'id', 'port_id');
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function tipo()
+    {
+        return $this->hasOne('App\Models\Tipo', 'id', 'tipo_id');
     }
     
 

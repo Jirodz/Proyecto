@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('nombre_contacto', 100);
             $table->integer('telefono');
             $table->string('nivel', 25);
+            $table->unsignedBigInteger('tipo_id');
+            $table->foreign('tipo_id')->references('id')->on('clientes');
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->unsignedBigInteger('establecimiento_id');
@@ -28,7 +30,12 @@ return new class extends Migration
             $table->foreign('odf_id')->references('id')->on('odfs');
             $table->unsignedBigInteger('port_id');
             $table->foreign('port_id')->references('id')->on('ports');
+            $table->string('responsable_operador', 100);
+            $table->string('dpi_responsable', 100);
+            $table->string('telefono_responsable', 100);
+            $table->date('fecha')->default(now()->format('Y-m-d'));
             $table->timestamps();
+            
         });
     }
 

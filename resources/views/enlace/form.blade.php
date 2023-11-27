@@ -27,30 +27,51 @@
             {!! $errors->first('nivel', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
+            {{ Form::label('tipo_id') }}
+            {{ Form::text('tipo_id', $enlace->tipo_id, ['class' => 'form-control' . ($errors->has('tipo_id') ? ' is-invalid' : ''), 'placeholder' => 'Tipo Id']) }}
+            {!! $errors->first('tipo_id', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
             {{ Form::label('cliente_id') }}
-            {{ Form::select('cliente_id',$clientes, $enlace->cliente_id, ['class' => 'form-control' . ($errors->has('cliente_id') ? ' is-invalid' : ''), 'placeholder' => 'Cliente Id']) }}
+            {{ Form::text('cliente_id', $enlace->cliente_id, ['class' => 'form-control' . ($errors->has('cliente_id') ? ' is-invalid' : ''), 'placeholder' => 'Cliente Id']) }}
             {!! $errors->first('cliente_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('establecimiento_id') }}
-            {{ Form::select('establecimiento_id',$establecimientos, $enlace->establecimiento_id, ['class' => 'form-control' . ($errors->has('establecimiento_id') ? ' is-invalid' : ''), 'placeholder' => 'Establecimiento Id']) }}
+            {{ Form::text('establecimiento_id', $enlace->establecimiento_id, ['class' => 'form-control' . ($errors->has('establecimiento_id') ? ' is-invalid' : ''), 'placeholder' => 'Establecimiento Id']) }}
             {!! $errors->first('establecimiento_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('local_id') }}
-            {{ Form::select('local_id',$locales, $enlace->local_id, ['class' => 'form-control' . ($errors->has('local_id') ? ' is-invalid' : ''), 'placeholder' => 'Local Id']) }}
+            {{ Form::text('local_id', $enlace->local_id, ['class' => 'form-control' . ($errors->has('local_id') ? ' is-invalid' : ''), 'placeholder' => 'Local Id']) }}
             {!! $errors->first('local_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('odf_id') }}
-            {{ Form::select('odf_id',$odfs, $enlace->odf_id, ['class' => 'form-control' . ($errors->has('odf_id') ? ' is-invalid' : ''), 'placeholder' => 'Odf Id']) }}
+            {{ Form::text('odf_id', $enlace->odf_id, ['class' => 'form-control' . ($errors->has('odf_id') ? ' is-invalid' : ''), 'placeholder' => 'Odf Id']) }}
             {!! $errors->first('odf_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('port_id') }}
-            {{ Form::select('port_id',$ports, $enlace->port_id, ['class' => 'form-control' . ($errors->has('port_id') ? ' is-invalid' : ''), 'placeholder' => 'Port Id']) }}
+            {{ Form::text('port_id', $enlace->port_id, ['class' => 'form-control' . ($errors->has('port_id') ? ' is-invalid' : ''), 'placeholder' => 'Port Id']) }}
             {!! $errors->first('port_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div class="form-group">
+            {{ Form::label('responsable_operador') }}
+            {{ Form::text('responsable_operador', $enlace->responsable_operador, ['class' => 'form-control' . ($errors->has('responsable_operador') ? ' is-invalid' : ''), 'placeholder' => 'Responsable Operador']) }}
+            {!! $errors->first('responsable_operador', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('dpi_responsable') }}
+            {{ Form::text('dpi_responsable', $enlace->dpi_responsable, ['class' => 'form-control' . ($errors->has('dpi_responsable') ? ' is-invalid' : ''), 'placeholder' => 'Dpi Responsable']) }}
+            {!! $errors->first('dpi_responsable', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('telefono_responsable') }}
+            {{ Form::text('telefono_responsable', $enlace->telefono_responsable, ['class' => 'form-control' . ($errors->has('telefono_responsable') ? ' is-invalid' : ''), 'placeholder' => 'Telefono Responsable']) }}
+            {!! $errors->first('telefono_responsable', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+
 
     </div>
     <div class="box-footer mt20">

@@ -34,7 +34,7 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
+
                                         
 										<th>Tipo De Red</th>
 
@@ -44,7 +44,7 @@
                                 <tbody>
                                     @foreach ($tipos as $tipo)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+
                                             
 											<td>{{ $tipo->tipo_de_red }}</td>
 

@@ -41,24 +41,44 @@
                             {{ $enlace->nivel }}
                         </div>
                         <div class="form-group">
+                            <strong>Tipo Id:</strong>
+                            {{ $enlace->tipo_id }}
+                        </div>
+                        <div class="form-group">
                             <strong>Cliente Id:</strong>
-                            {{ $enlace->cliente->nombre }}
+                            {{ $enlace->cliente_id }}
                         </div>
                         <div class="form-group">
                             <strong>Establecimiento Id:</strong>
-                            {{ $enlace->establecimiento->nombre_establecimiento }}
+                            {{ $enlace->establecimiento_id }}
                         </div>
                         <div class="form-group">
                             <strong>Local Id:</strong>
-                            {{ $enlace->numero_local }}
+                            {{ $enlace->local_id }}
                         </div>
                         <div class="form-group">
                             <strong>Odf Id:</strong>
-                            {{ $enlace->odf->nombre_odf }}
+                            {{ $enlace->odf_id }}
                         </div>
                         <div class="form-group">
                             <strong>Port Id:</strong>
-                            {{ $enlace->port->numero_puerto }}
+                            {{ $enlace->port_id }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Responsable Operador:</strong>
+                            {{ $enlace->responsable_operador }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Dpi Responsable:</strong>
+                            {{ $enlace->dpi_responsable }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Telefono Responsable:</strong>
+                            {{ $enlace->telefono_responsable }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Fecha:</strong>
+                            {{ $enlace->fecha }}
                         </div>
 
                     </div>

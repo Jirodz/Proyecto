@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $cliente->name ?? "{{ __('Show') Cliente" }}
+    {{ $rack->name ?? "{{ __('Show') Rack" }}
 @endsection
 
 @section('content')
@@ -11,30 +11,26 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Cliente</span>
+                            <span class="card-title">{{ __('Show') }} Rack</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('clientes.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('racks.index') }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Nombre:</strong>
-                            {{ $cliente->nombre }}
+                            <strong>Nombre Rack:</strong>
+                            {{ $rack->nombre_rack }}
                         </div>
                         <div class="form-group">
-                            <strong>Razon Social:</strong>
-                            {{ $cliente->razon_social }}
+                            <strong>Tipo Rack:</strong>
+                            {{ $rack->tipo_rack }}
                         </div>
                         <div class="form-group">
-                            <strong>Encargado:</strong>
-                            {{ $cliente->encargado }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Numero Telefono:</strong>
-                            {{ $cliente->numero_telefono }}
+                            <strong>Establecimiento Id:</strong>
+                            {{ $rack->establecimiento_id }}
                         </div>
 
                     </div>

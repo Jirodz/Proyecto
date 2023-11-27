@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 150);
             $table->string('razon_social', 100);
-            $table->bigInteger('dpi');
+            $table->string('encargado', 100)->nullable();
             $table->integer('numero_telefono');
             $table->timestamps();
         });
