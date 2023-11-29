@@ -8,6 +8,9 @@ use App\Models\Port;
 use App\Models\Establecimiento;
 use App\Models\Tipolocale;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+
+
 
 class LocaleController extends Controller
 {
@@ -99,8 +102,13 @@ class LocaleController extends Controller
 
         $locale = Locale::create($request->all());
 
-        return redirect()->route('locales.index')
-            ->with('success', 'Locale created successfully.');
+        $establecimientoId = $request->input('establecimiento_id');
+
+        // Después de guardar, redirige al usuario a la página del establecimiento filtrado
+        return Redirect::route('locales.index', ['establecimiento_id' => $establecimientoId])
+            ->with('success', 'La actividad se ha efectuado correctamente.');
+
+
     }
 
     public function show($id)
@@ -137,8 +145,11 @@ class LocaleController extends Controller
 
         $locale->update($request->all());
 
-        return redirect()->route('locales.index')
-            ->with('success', 'Locale updated successfully');
+        $establecimientoId = $request->input('establecimiento_id');
+
+        // Después de guardar, redirige al usuario a la página del establecimiento filtrado
+        return Redirect::route('locales.index', ['establecimiento_id' => $establecimientoId])
+            ->with('success', 'La actividad se ha efectuado correctamente.');
     }
 
     public function destroy($id)

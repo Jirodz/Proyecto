@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -18,8 +19,10 @@ return new class extends Migration
             $table->string('nombre_contacto', 100);
             $table->integer('telefono');
             $table->string('nivel', 25);
+            $table->unsignedBigInteger('tipolocal_id');
+            $table->foreign('tipolocal_id')->references('id')->on('tipolocales');
             $table->unsignedBigInteger('tipo_id');
-            $table->foreign('tipo_id')->references('id')->on('clientes');
+            $table->foreign('tipo_id')->references('id')->on('tipos');
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->unsignedBigInteger('establecimiento_id');
@@ -33,7 +36,7 @@ return new class extends Migration
             $table->string('responsable_operador', 100);
             $table->string('dpi_responsable', 100);
             $table->string('telefono_responsable', 100);
-            $table->date('fecha')->default(now()->format('Y-m-d'));
+            $table->date('fecha')->default(now());
             $table->timestamps();
             
         });

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $enlace->name ?? "{{ __('Show') Enlace" }}
+    {{ $enlace->name ?? "{{ __('Mostrar') Enlace" }}
 @endsection
 
 @section('content')
@@ -11,10 +11,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Enlace</span>
+                            <span class="card-title">{{ __('Mostrar') }} Enlace</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('enlaces.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('enlaces.index') }}"> {{ __('Regresar') }}</a>
                         </div>
                     </div>
 
@@ -41,28 +41,32 @@
                             {{ $enlace->nivel }}
                         </div>
                         <div class="form-group">
-                            <strong>Tipo Id:</strong>
-                            {{ $enlace->tipo_id }}
+                            <strong>Tipo de local:</strong>
+                            {{ $enlace->tipolocale->tipo_de_local }}
                         </div>
                         <div class="form-group">
-                            <strong>Cliente Id:</strong>
-                            {{ $enlace->cliente_id }}
+                            <strong>Tipo de red:</strong>
+                            {{ $enlace->tipo->tipo_de_red}}
                         </div>
                         <div class="form-group">
-                            <strong>Establecimiento Id:</strong>
-                            {{ $enlace->establecimiento_id }}
+                            <strong>Cliente:</strong>
+                            {{ $enlace->cliente->nombre}}
                         </div>
                         <div class="form-group">
-                            <strong>Local Id:</strong>
-                            {{ $enlace->local_id }}
+                            <strong>Establecimiento:</strong>
+                            {{ $enlace->establecimiento->nombre_establecimiento }}
                         </div>
                         <div class="form-group">
-                            <strong>Odf Id:</strong>
-                            {{ $enlace->odf_id }}
+                            <strong>Local:</strong>
+                            {{ $enlace->locale->numero_local }}
                         </div>
                         <div class="form-group">
-                            <strong>Port Id:</strong>
-                            {{ $enlace->port_id }}
+                            <strong>ODF Red Optima:</strong>
+                            {{ $enlace->odf->nombre_odf }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Puerto:</strong>
+                            {{ $enlace->port->numero_puerto}}
                         </div>
                         <div class="form-group">
                             <strong>Responsable Operador:</strong>

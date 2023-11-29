@@ -27,33 +27,38 @@
             {!! $errors->first('nivel', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('tipo_id') }}
-            {{ Form::text('tipo_id', $enlace->tipo_id, ['class' => 'form-control' . ($errors->has('tipo_id') ? ' is-invalid' : ''), 'placeholder' => 'Tipo Id']) }}
+            {{ Form::label('tipo de local') }}
+            {{ Form::select('tipolocal_id',$tipolocal, $enlace->tipolocal_id, ['class' => 'form-control' . ($errors->has('tipolocal_id') ? ' is-invalid' : ''), 'placeholder' => 'Tipo de local']) }}
+            {!! $errors->first('tipolocal_id', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('tipo de red') }}
+            {{ Form::select('tipo_id',$tipodered, $enlace->tipo_id, ['class' => 'form-control' . ($errors->has('tipo_id') ? ' is-invalid' : ''), 'placeholder' => 'Tipo de red']) }}
             {!! $errors->first('tipo_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('cliente_id') }}
-            {{ Form::text('cliente_id', $enlace->cliente_id, ['class' => 'form-control' . ($errors->has('cliente_id') ? ' is-invalid' : ''), 'placeholder' => 'Cliente Id']) }}
+            {{ Form::label('cliente') }}
+            {{ Form::select('cliente_id',$cliente, $enlace->cliente_id, ['class' => 'form-control' . ($errors->has('cliente_id') ? ' is-invalid' : ''), 'placeholder' => 'Cliente']) }}
             {!! $errors->first('cliente_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('establecimiento_id') }}
-            {{ Form::text('establecimiento_id', $enlace->establecimiento_id, ['class' => 'form-control' . ($errors->has('establecimiento_id') ? ' is-invalid' : ''), 'placeholder' => 'Establecimiento Id']) }}
+            {{ Form::label('establecimiento') }}
+            {{ Form::select('establecimiento_id',$establecimiento, $enlace->establecimiento_id, ['class' => 'form-control' . ($errors->has('establecimiento_id') ? ' is-invalid' : ''), 'placeholder' => 'Establecimiento']) }}
             {!! $errors->first('establecimiento_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('local_id') }}
-            {{ Form::text('local_id', $enlace->local_id, ['class' => 'form-control' . ($errors->has('local_id') ? ' is-invalid' : ''), 'placeholder' => 'Local Id']) }}
+            {{ Form::label('local') }}
+            {{ Form::select('local_id',$local, $enlace->local_id, ['class' => 'form-control' . ($errors->has('local_id') ? ' is-invalid' : ''), 'placeholder' => 'Local']) }}
             {!! $errors->first('local_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('odf_id') }}
-            {{ Form::text('odf_id', $enlace->odf_id, ['class' => 'form-control' . ($errors->has('odf_id') ? ' is-invalid' : ''), 'placeholder' => 'Odf Id']) }}
+            {{ Form::label('ODF') }}
+            {{ Form::select('odf_id',$odf, $enlace->odf_id, ['class' => 'form-control' . ($errors->has('odf_id') ? ' is-invalid' : ''), 'placeholder' => 'ODF']) }}
             {!! $errors->first('odf_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('port_id') }}
-            {{ Form::text('port_id', $enlace->port_id, ['class' => 'form-control' . ($errors->has('port_id') ? ' is-invalid' : ''), 'placeholder' => 'Port Id']) }}
+            {{ Form::label('puerto') }}
+            {{ Form::select('port_id',$puerto, $enlace->port_id, ['class' => 'form-control' . ($errors->has('port_id') ? ' is-invalid' : ''), 'placeholder' => 'Puerto']) }}
             {!! $errors->first('port_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
@@ -72,9 +77,8 @@
             {!! $errors->first('telefono_responsable', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
-
     </div>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+        <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
     </div>
 </div>

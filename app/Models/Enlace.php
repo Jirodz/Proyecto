@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $nombre_contacto
  * @property $telefono
  * @property $nivel
+ * @property $tipolocal_id
  * @property $tipo_id
  * @property $cliente_id
  * @property $establecimiento_id
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Log[] $logs
  * @property Odf $odf
  * @property Port $port
+ * @property Tipolocale $tipolocale
  * @property Tipo $tipo
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -46,6 +48,7 @@ class Enlace extends Model
 		'nombre_contacto' => 'required',
 		'telefono' => 'required',
 		'nivel' => 'required',
+		'tipolocal_id' => 'required',
 		'tipo_id' => 'required',
 		'cliente_id' => 'required',
 		'establecimiento_id' => 'required',
@@ -65,7 +68,7 @@ class Enlace extends Model
      *
      * @var array
      */
-    protected $fillable = ['actividad','negocio','nombre_contacto','telefono','nivel','tipo_id','cliente_id','establecimiento_id','local_id','odf_id','port_id','responsable_operador','dpi_responsable','telefono_responsable','fecha'];
+    protected $fillable = ['actividad','negocio','nombre_contacto','telefono','nivel','tipolocal_id','tipo_id','cliente_id','establecimiento_id','local_id','odf_id','port_id','responsable_operador','dpi_responsable','telefono_responsable','fecha'];
 
 
     /**
@@ -122,6 +125,14 @@ class Enlace extends Model
     public function port()
     {
         return $this->hasOne('App\Models\Port', 'id', 'port_id');
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function tipolocale()
+    {
+        return $this->hasOne('App\Models\Tipolocale', 'id', 'tipolocal_id');
     }
     
     /**

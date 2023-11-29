@@ -9,18 +9,21 @@
         <div class="row">
             <div class="col-sm-12">
 
-                <form method="GET" action="{{ route('locales.index') }}" style="margin-bottom: 20px;">
-                    <label for="establecimiento_id">Selecciona un establecimiento:</label>
-                    <select name="establecimiento_id" id="establecimiento_id">
-                        <option value="">-></option>
-                        @foreach ($establecimientos as $establecimiento)
-                            <option value="{{ $establecimiento->id }}" {{ $selectedEstablecimientoId == $establecimiento->id ? 'selected' : '' }}>
-                                {{ $establecimiento->nombre_establecimiento }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <button type="submit">Filtrar</button>
+                <form action="{{ route('locales.index') }}" method="GET" style="margin-bottom: 20px;">
+                    <div class="form-group">
+                        <label for="establecimiento_id">Selecciona un establecimiento:</label>
+                        <select name="establecimiento_id" id="establecimiento_id" class="form-control">
+                            <option value="">Seleccione un establecimiento</option>
+                            @foreach ($establecimientos as $establecimiento)
+                                <option value="{{ $establecimiento->id }}" {{ $selectedEstablecimientoId == $establecimiento->id ? 'selected' : '' }}>
+                                    {{ $establecimiento->nombre_establecimiento }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
                 </form>
+                
 
                 <div class="row">
                     <div class="col-md-4" style="margin: 10px 0;">
