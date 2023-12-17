@@ -16,11 +16,14 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clientes = Cliente::paginate();
+        $search = $request->get('search');
+        $clientes = Cliente::when($search, function ($query) use ($search) {
+            return $query->where('nombre', 'like', '%' . $search . '%');
+        })->paginate();
 
-        return view('cliente.index', compact('clientes'))
+        return view('cliente.index', compact('clientes', 'search'))
             ->with('i', (request()->input('page', 1) - 1) * $clientes->perPage());
     }
 
@@ -101,9 +104,18 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        $cliente = Cliente::find($id)->delete();
-
-        return redirect()->route('clientes.index')
-            ->with('success', 'Cliente deleted successfully');
+        try {
+            // Buscar y eliminar el cliente
+            $cliente = Cliente::findOrFail($id);
+            $cliente->delete();
+    
+            return redirect()->route('clientes.index')
+                ->with('success', 'Cliente deleted successfully');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Capturar y manejar la excepción
+            return redirect()->route('clientes.index')
+                ->with('success', 'No se puede eliminar el cliente debido a que esta siendo utilizado en una o varias conexiones.');
+        }
     }
+    
 }

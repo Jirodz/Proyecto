@@ -11,10 +11,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Odf</span>
+                            <span class="card-title">{{ __('Mostrar') }} Odf</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('odfs.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('odfs.index') }}"> {{ __('Regresar') }}</a>
                         </div>
                     </div>
 

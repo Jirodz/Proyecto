@@ -13,12 +13,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('enlaces', function (Blueprint $table) {
+            
             $table->id();
             $table->string('actividad', 100);
             $table->string('negocio', 100);
             $table->string('nombre_contacto', 100);
             $table->integer('telefono');
             $table->string('nivel', 25);
+            $table->unsignedBigInteger('operador_id');
+            $table->foreign('operador_id')->references('id')->on('operadores');
             $table->unsignedBigInteger('tipolocal_id');
             $table->foreign('tipolocal_id')->references('id')->on('tipolocales');
             $table->unsignedBigInteger('tipo_id');
@@ -33,6 +36,8 @@ return new class extends Migration
             $table->foreign('odf_id')->references('id')->on('odfs');
             $table->unsignedBigInteger('port_id');
             $table->foreign('port_id')->references('id')->on('ports');
+            $table->string('odf_operador', 100);
+            $table->string('puerto_operador', 100);
             $table->string('responsable_operador', 100);
             $table->string('dpi_responsable', 100);
             $table->string('telefono_responsable', 100);

@@ -11,10 +11,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Rackoperadore</span>
+                            <span class="card-title">{{ __('Mostrar') }} Rackoperadore</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('rackoperadores.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('rackoperadores.index') }}"> {{ __('Regresar') }}</a>
                         </div>
                     </div>
 

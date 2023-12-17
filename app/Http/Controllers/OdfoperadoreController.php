@@ -52,7 +52,7 @@ class OdfoperadoreController extends Controller
         $odfoperadore = Odfoperadore::create($request->all());
 
         return redirect()->route('odfoperadores.index')
-            ->with('success', 'Odfoperadore created successfully.');
+            ->with('success', 'ODF de operador creado exitosamente.');
     }
 
     /**
@@ -96,7 +96,7 @@ class OdfoperadoreController extends Controller
         $odfoperadore->update($request->all());
 
         return redirect()->route('odfoperadores.index')
-            ->with('success', 'Odfoperadore updated successfully');
+            ->with('success', 'ODF de operador actualizado exitosamente');
     }
 
     /**
@@ -106,9 +106,18 @@ class OdfoperadoreController extends Controller
      */
     public function destroy($id)
     {
-        $odfoperadore = Odfoperadore::find($id)->delete();
+        try{
+            $odfoperadore = Odfoperadore::findOrFail($id);
+            $odfoperadore->delete();
 
-        return redirect()->route('odfoperadores.index')
-            ->with('success', 'Odfoperadore deleted successfully');
+            return redirect()->route('odfoperadores.index')
+            ->with('success', 'ODF de operador eliminado exitosamente');
+
+        } catch(\Illuminate\Database\QueryException $e){
+            return redirect()->route('odfoperadores.index')
+            ->with('success', 'El ODF de operador esta vinculado a un establecimiento');
+
+        }
+
     }
 }

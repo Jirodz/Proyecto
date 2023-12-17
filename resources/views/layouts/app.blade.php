@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Red Optima</title>
-    <link rel="icon" href="{{ asset('public/images/favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('eye.PNG') }}" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -69,6 +69,9 @@
                         <a href="{{ route('enlaces.index') }}" style="margin-bottom: 20px; color: white;" class="btn btn-dark d-block">
                             <i class="fas fa-plug"></i> {{ __('Enlaces') }}
                         </a>
+                        <a href="{{ route('visitas.index') }}" style="margin-bottom: 20px; color: white;" class="btn btn-dark d-block">
+                            <i class="fas fa-plug"></i> {{ __('Bitácora') }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -80,6 +83,9 @@
                 </button>
                 <div class="collapse" id="mantenimientoMenu">
                     <div style="background-color: #1b1a1a; padding: 10px; border-radius: 5px;">
+                        <a href="{{ route('establecimientos.index') }}" style="margin-bottom: 20px; color: white;" class="btn btn-dark d-block">
+                            <i class="fas fa-building"></i> {{ __('Establecimientos') }}
+                        </a>
                         <a href="{{ route('rackoperadores.index') }}" style="margin-bottom: 20px; color: white;" class="btn btn-dark d-block">
                             <i class="fas fa-server"></i> {{ __('Rack Operadores') }}
                         </a>
@@ -89,9 +95,7 @@
                         <a href="{{ route('odfs.index') }}" style="margin-bottom: 20px; color: white;" class="btn btn-dark d-block">
                             <i class="fas fa-network-wired"></i> {{ __('ODF de Red Optima') }}
                         </a>
-                        <a href="{{ route('establecimientos.index') }}" style="margin-bottom: 20px; color: white;" class="btn btn-dark d-block">
-                            <i class="fas fa-building"></i> {{ __('Establecimientos') }}
-                        </a>
+
                         <a href="{{ route('locales.index') }}" style="margin-bottom: 20px; color: white;" class="btn btn-dark d-block">
                             <i class="fas fa-building"></i> {{ __('Locales') }}
                         </a>
@@ -134,7 +138,7 @@
     <div id="main-content" style="flex: 1; display: flex; flex-direction: column;">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('home') }}">
                     Inicio
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -164,9 +168,10 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Cerrar Sesión') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+
                                         @csrf
                                     </form>
                                 </div>

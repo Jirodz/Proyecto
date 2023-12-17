@@ -17,13 +17,26 @@ class OdfController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $odfs = Odf::paginate();
-
-        return view('odf.index', compact('odfs'))
+        $query = Odf::with('establecimiento');
+    
+        // Filtrar por establecimiento
+        if ($request->has('establecimiento_id') && $request->filled('establecimiento_id')) {
+            $query->whereHas('establecimiento', function ($query) use ($request) {
+                $query->where('id', $request->establecimiento_id);
+            });
+        }
+    
+        $odfs = $query->paginate();
+    
+        // Obtener la lista de establecimientos para el formulario de filtrado
+        $establecimientos = Establecimiento::all();
+    
+        return view('odf.index', compact('odfs', 'establecimientos'))
             ->with('i', (request()->input('page', 1) - 1) * $odfs->perPage());
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -51,7 +64,7 @@ class OdfController extends Controller
         $odf = Odf::create($request->all());
 
         return redirect()->route('odfs.index')
-            ->with('success', 'Odf created successfully.');
+            ->with('success', 'ODF creado exitosamente.');
     }
 
     /**
@@ -95,7 +108,7 @@ class OdfController extends Controller
         $odf->update($request->all());
 
         return redirect()->route('odfs.index')
-            ->with('success', 'Odf updated successfully');
+            ->with('success', 'ODF actualizado exitosamente');
     }
 
     /**
@@ -105,9 +118,17 @@ class OdfController extends Controller
      */
     public function destroy($id)
     {
-        $odf = Odf::find($id)->delete();
+        try{
+            $odf = Odf::findOrFail($id);
+            $odf->delete();
 
-        return redirect()->route('odfs.index')
-            ->with('success', 'Odf deleted successfully');
+            return redirect()->route('odfs.index')
+            ->with('success', 'ODF Eliminado exitosamente');
+        }  catch(\Illuminate\Database\QueryException $e){
+
+            return redirect()->route('odfs.index')
+            ->with('success', 'El ODF esta vinculado a uno o varios registros');
+        }
+        
     }
 }

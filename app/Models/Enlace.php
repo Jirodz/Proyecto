@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $nombre_contacto
  * @property $telefono
  * @property $nivel
+ * @property $operador_id
  * @property $tipolocal_id
  * @property $tipo_id
  * @property $cliente_id
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Locale $locale
  * @property Log[] $logs
  * @property Odf $odf
+ * @property Operadore $operadore
  * @property Port $port
  * @property Tipolocale $tipolocale
  * @property Tipo $tipo
@@ -48,6 +50,7 @@ class Enlace extends Model
 		'nombre_contacto' => 'required',
 		'telefono' => 'required',
 		'nivel' => 'required',
+		'operador_id' => 'required',
 		'tipolocal_id' => 'required',
 		'tipo_id' => 'required',
 		'cliente_id' => 'required',
@@ -55,6 +58,8 @@ class Enlace extends Model
 		'local_id' => 'required',
 		'odf_id' => 'required',
 		'port_id' => 'required',
+        'odf_operador' => 'required',
+        'puerto_operador' => 'required',
 		'responsable_operador' => 'required',
 		'dpi_responsable' => 'required',
 		'telefono_responsable' => 'required',
@@ -68,7 +73,7 @@ class Enlace extends Model
      *
      * @var array
      */
-    protected $fillable = ['actividad','negocio','nombre_contacto','telefono','nivel','tipolocal_id','tipo_id','cliente_id','establecimiento_id','local_id','odf_id','port_id','responsable_operador','dpi_responsable','telefono_responsable','fecha'];
+    protected $fillable = ['actividad','negocio','nombre_contacto','telefono','nivel','operador_id','tipolocal_id','tipo_id','cliente_id','establecimiento_id','local_id','odf_id','port_id','odf_operador','puerto_operador','responsable_operador','dpi_responsable','telefono_responsable','fecha'];
 
 
     /**
@@ -117,6 +122,14 @@ class Enlace extends Model
     public function odf()
     {
         return $this->hasOne('App\Models\Odf', 'id', 'odf_id');
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function operadore()
+    {
+        return $this->hasOne('App\Models\Operadore', 'id', 'operador_id');
     }
     
     /**

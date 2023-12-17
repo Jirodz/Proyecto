@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('locales', function (Blueprint $table) {
+            
             $table->id();
             $table->string('numero_local',50);
             $table->unsignedBigInteger('establecimiento_id');

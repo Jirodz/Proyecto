@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $enlace->name ?? "{{ __('Mostrar') Enlace" }}
+    {{ $enlace->name ?? "{{ __('Show') Enlace" }}
 @endsection
 
 @section('content')
@@ -17,9 +17,7 @@
                             <a class="btn btn-primary" href="{{ route('enlaces.index') }}"> {{ __('Regresar') }}</a>
                         </div>
                     </div>
-
                     <div class="card-body">
-                        
                         <div class="form-group">
                             <strong>Actividad:</strong>
                             {{ $enlace->actividad }}
@@ -39,6 +37,10 @@
                         <div class="form-group">
                             <strong>Nivel:</strong>
                             {{ $enlace->nivel }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Operador:</strong>
+                            {{ $enlace->operadore->operador }}
                         </div>
                         <div class="form-group">
                             <strong>Tipo de local:</strong>
@@ -67,6 +69,14 @@
                         <div class="form-group">
                             <strong>Puerto:</strong>
                             {{ $enlace->port->numero_puerto}}
+                        </div>
+                        <div class="form-group">
+                            <strong>Odf Operador:</strong>
+                            {{ $enlace->odf_operador }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Puerto Operador:</strong>
+                            {{ $enlace->puerto_operador }}
                         </div>
                         <div class="form-group">
                             <strong>Responsable Operador:</strong>

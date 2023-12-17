@@ -1,65 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     {{ __('¡Hola, ') . Auth::user()->name }}
                 </div>
-                
                 <div class="card-body">
-                    @php
-                        $hour = now()->hour;
-                        $greeting = '';
-                        $message = '';
-                        $jumbotronClass = '';
-                
-                        if ($hour >= 5 && $hour < 12) {
-                            $greeting = __('¡Buenos días!');
-                            $message = __('¿Cómo te encuentras esta mañana?');
-                            $jumbotronClass = 'bg-warning'; // Amarillo para la mañana
-                        } elseif ($hour >= 12 && $hour < 18) {
-                            $greeting = __('¡Buenas tardes!');
-                            $message = __('¿Cómo ha sido tu día hasta ahora?');
-                            $jumbotronClass = 'bg-dark text-light'; // Celeste para la tarde
-                        } else {
-                            $greeting = __('¡Buenas noches!');
-                            $message = __('Espero que hayas tenido un buen día.');
-                            $jumbotronClass = 'bg-dark text-light'; // Oscuro para la noche
-                        }
-                    @endphp
-                
-                    <style>
-                        @keyframes changeColor {
-                            0% { color: #FF5733; }
-                            50% { color: #33FF57; }
-                            100% { color: #5733FF; }
-                        }
-                
-                        @keyframes moveText {
-                            0% { transform: translateX(0); }
-                            50% { transform: translateX(50px); }
-                            100% { transform: translateX(0); }
-                        }
-                
-                        .animated-text {
-                            animation: changeColor 5s infinite, moveText 5s infinite; /* Ambas animaciones se ejecutan simultáneamente */
-                        }
-                    </style>
-                
-                    <div class="jumbotron jumbotron-fluid text-center {{ $jumbotronClass }}" style="padding: 100px; margin-bottom: 20px;">
-                        <div class="container">
-                            <h1 class="display-4 animated-text">{{ $greeting }}</h1>
-                            <p class="lead animated-text">{{ $message }}</p>
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="2000">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            <!-- Agrega más indicadores según el número de imágenes -->
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('image1.png') }}" class="d-block w-100" alt="Imagen 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('image2.png') }}" class="d-block w-100" alt="Imagen 2">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('image3.png') }}" class="d-block w-100" alt="Imagen 3">
+                            </div>
+                            <!-- Agrega más items según el número de imágenes -->
                         </div>
                     </div>
-                 </div>
-                
-                
+
+                    <!-- Agrega estos scripts antes de tu script actual -->
+                    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+                    <script>
+                        $('#carouselExampleIndicators').carousel({
+                            interval: 5500
+                        });
+
+                        // Elimina el historial del navegador cuando se cambia de imagen en el carrusel
+                        $('#carouselExampleIndicators').on('slide.bs.carousel', function () {
+                            window.location.hash = '';
+                        });
+                    </script>
+                </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+
+

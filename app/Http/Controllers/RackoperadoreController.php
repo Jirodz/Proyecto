@@ -62,7 +62,7 @@ class RackoperadoreController extends Controller
         $rackoperadore = Rackoperadore::create($request->all());
 
         return redirect()->route('rackoperadores.index')
-            ->with('success', 'Rackoperadore created successfully.');
+            ->with('success', 'Rack de operador creado exitmsamente');
     }
 
     /**
@@ -106,7 +106,7 @@ class RackoperadoreController extends Controller
         $rackoperadore->update($request->all());
 
         return redirect()->route('rackoperadores.index')
-            ->with('success', 'Rackoperadore updated successfully');
+            ->with('success', 'Rack de operador actualizado exitosamente');
     }
 
     /**
@@ -116,9 +116,20 @@ class RackoperadoreController extends Controller
      */
     public function destroy($id)
     {
-        $rackoperadore = Rackoperadore::find($id)->delete();
+        try{
+            $rackoperadore = Rackoperadore::findOrFail($id);
+            $rackoperadore->delete();
 
-        return redirect()->route('rackoperadores.index')
-            ->with('success', 'Rackoperadore deleted successfully');
+            return redirect()->route('rackoperadores.index')
+            ->with('success', 'Rack de operador eliminado exitosamente');
+
+        } catch(\Illuminate\Database\QueryException $e){
+            return redirect()->route('rackoperadores.index')
+            ->with('success', 'Rack de operador vinculado a uno o varios registros');
+
+        }
+        
+
+
     }
 }

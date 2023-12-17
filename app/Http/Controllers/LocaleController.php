@@ -7,6 +7,7 @@ use App\Models\Odf;
 use App\Models\Port;
 use App\Models\Establecimiento;
 use App\Models\Tipolocale;
+use App\Http\Controllers\VisitaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -104,6 +105,8 @@ class LocaleController extends Controller
 
         $establecimientoId = $request->input('establecimiento_id');
 
+    
+
         // Después de guardar, redirige al usuario a la página del establecimiento filtrado
         return Redirect::route('locales.index', ['establecimiento_id' => $establecimientoId])
             ->with('success', 'La actividad se ha efectuado correctamente.');
@@ -154,12 +157,21 @@ class LocaleController extends Controller
 
     public function destroy($id)
     {
-        $locale = Locale::find($id)->delete();
-
-        return redirect()->route('locales.index')
-            ->with('success', 'Locale deleted successfully');
-    }
+        try{
+        $locale = Locale::findOrFail($id);
+        $establecimientoId = $locale->establecimiento_id;
     
+        // Borra el locale
+        $locale->delete();
+    
+        // Redirige al usuario de vuelta al establecimiento
+            return redirect()->route('locales.index', ['establecimiento_id' => $establecimientoId])
+            ->with('success', 'Local eliminado exitosamente');
+        } catch(\Illuminate\Database\QueryException){
+
+            return redirect()->route('locales.index', ['establecimiento_id' => $establecimientoId])
+            ->with('success', 'El local seleccionado esta vinculado actualmente a una conexión');
+
+        }
+    }
 }
-
-

@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Enlace[] $enlaces
  * @property Establecimiento $establecimiento
- * @property Localtipo[] $localtipos
  * @property Odf $odf
  * @property Port $port
  * @package App
@@ -57,14 +56,6 @@ class Locale extends Model
     public function establecimiento()
     {
         return $this->hasOne('App\Models\Establecimiento', 'id', 'establecimiento_id');
-    }
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function localtipos()
-    {
-        return $this->hasMany('App\Models\Localtipo', 'locale_id', 'id');
     }
     
     /**

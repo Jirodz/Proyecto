@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Rackoperadore;
 use App\Models\Establecimiento;
 use App\Models\Desarrolladora;
+use Illuminate\Database\QueryException;
 
 /**
  * Class EstablecimientoController
@@ -117,9 +118,16 @@ class EstablecimientoController extends Controller
      */
     public function destroy($id)
     {
-        $establecimiento = Establecimiento::find($id)->delete();
+        try{
+            $establecimiento = Establecimiento::findOrFail($id);
+            $establecimiento->delete();
+
+            return redirect()->route('establecimientos.index')
+            ->with('success', 'Establecimiento eliminado exitosamente');
+        } catch(\Illuminate\Database\QueryException $e){
 
         return redirect()->route('establecimientos.index')
-            ->with('success', 'Establecimiento deleted successfully');
+            ->with('success', 'El establecimiento esta vinculado a uno o varios registros');
+        }
     }
 }

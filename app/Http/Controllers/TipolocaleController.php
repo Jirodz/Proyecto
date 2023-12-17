@@ -48,7 +48,7 @@ class TipolocaleController extends Controller
         $tipolocale = Tipolocale::create($request->all());
 
         return redirect()->route('tipolocales.index')
-            ->with('success', 'Tipolocale created successfully.');
+            ->with('success', 'Tipo de local creado exitosamente');
     }
 
     /**
@@ -91,7 +91,7 @@ class TipolocaleController extends Controller
         $tipolocale->update($request->all());
 
         return redirect()->route('tipolocales.index')
-            ->with('success', 'Tipolocale updated successfully');
+            ->with('success', 'Tipo de local actualizado exitosamente');
     }
 
     /**
@@ -101,9 +101,18 @@ class TipolocaleController extends Controller
      */
     public function destroy($id)
     {
-        $tipolocale = Tipolocale::find($id)->delete();
-
+        try{
+            $tipolocale = Tipolocale::findOrFail($id);
+            $tipolocale->delete();
+            
         return redirect()->route('tipolocales.index')
-            ->with('success', 'Tipolocale deleted successfully');
+        ->with('success', 'Tipo de local eliminado exitosamente');
+
+        } catch(\Illuminate\Database\QueryException $e){
+
+            return redirect()->route('tipolocales.index')
+        ->with('success', 'El tipo de local esta siendo utilizado por uno o varias conexiones');
+
+        }
     }
 }

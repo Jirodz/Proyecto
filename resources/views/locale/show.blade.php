@@ -15,17 +15,17 @@
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary" href="{{ route('locales.index', ['establecimiento_id' => $locale->establecimiento_id]) }}">
-                                {{ __('Back') }}
+                                {{ __('Regresar') }}
                             </a>
                             <a class="btn btn-success" href="{{ route('locales.edit', $locale->id) }}">
-                                {{ __('Edit') }}
+                                {{ __('Editar') }}
                             </a>
                             <!-- Agregar el botón de eliminar -->
                             <form action="{{ route('locales.destroy', $locale->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">
-                                    {{ __('Delete') }}
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Esta seguro de que desea eliminar este local?')">
+                                    {{ __('Borrar') }}
                                 </button>
                             </form>
                         </div>
@@ -54,6 +54,3 @@
         </div>
     </section>
 @endsection
-
-
-

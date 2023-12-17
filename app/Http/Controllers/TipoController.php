@@ -48,7 +48,7 @@ class TipoController extends Controller
         $tipo = Tipo::create($request->all());
 
         return redirect()->route('tipos.index')
-            ->with('success', 'Tipo created successfully.');
+            ->with('success', 'Tipo de red creado exitosamente');
     }
 
     /**
@@ -91,7 +91,7 @@ class TipoController extends Controller
         $tipo->update($request->all());
 
         return redirect()->route('tipos.index')
-            ->with('success', 'Tipo updated successfully');
+            ->with('success', 'Tipo de red actualizado exitosamente');
     }
 
     /**
@@ -101,9 +101,19 @@ class TipoController extends Controller
      */
     public function destroy($id)
     {
-        $tipo = Tipo::find($id)->delete();
+        try{
+            $tipo = Tipo::findOrFail($id);
+            $tipo->delete();
 
+            return redirect()->route('tipos.index')
+            ->with('success', 'Tipo de red eliminado exitosamente');
+
+        } catch(\Illuminate\Database\QueryException $e){
+            
         return redirect()->route('tipos.index')
-            ->with('success', 'Tipo deleted successfully');
+        ->with('success', 'El tipo de red esta vinculado a uno o varios registros');
+
+        }
+
     }
 }

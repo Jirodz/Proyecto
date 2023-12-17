@@ -53,7 +53,7 @@ class OperadoreController extends Controller
         $operadore = Operadore::create($request->all());
 
         return redirect()->route('operadores.index')
-            ->with('success', 'Operadore created successfully.');
+            ->with('success', 'Operador creado exitosamente');
     }
 
     /**
@@ -96,7 +96,7 @@ class OperadoreController extends Controller
         $operadore->update($request->all());
 
         return redirect()->route('operadores.index')
-            ->with('success', 'Operadore updated successfully');
+            ->with('success', 'Operador actualizado exitosamente');
     }
 
     /**
@@ -106,10 +106,19 @@ class OperadoreController extends Controller
      */
     public function destroy($id)
     {
-        $operadore = Operadore::find($id)->delete();
+        try{
+            $operadore = Operadore::findOrFail($id);
+            $operadore->delete();
 
-        return redirect()->route('operadores.index')
-            ->with('success', 'Operadore deleted successfully');
+            return redirect()->route('operadores.index')
+            ->with('success', 'Operador eliminado exitosamente');
+
+        } catch(\Illuminate\Database\QueryException $e){
+
+            return redirect()->route('operadores.index')
+            ->with('success', 'El Operador esta vinculado a uno o varios registros');
+
+        }
     }
 
 

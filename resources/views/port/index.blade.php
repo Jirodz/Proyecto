@@ -64,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $ports->links() !!}
+                @include('pagination', ['paginator' => $ports])
             </div>
         </div>
     </div>

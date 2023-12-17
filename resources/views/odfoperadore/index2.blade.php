@@ -67,7 +67,8 @@
                     </div>
                 </div>
             </div>
-            {!! $odfoperadores->links() !!}
+            @include('pagination', ['paginator' => $odfoperadores])
+            {{-- {!! $odfoperadores->links() !!} --}}
         </div>
     </div>
 </div>

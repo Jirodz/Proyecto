@@ -27,7 +27,7 @@
                             </span>
                              <div class="float-right">
                                 <a href="{{ route('rackoperadores.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                                  {{ __('Crear nuevo') }}
                                 </a>
                               </div>
                         </div>
@@ -57,11 +57,11 @@
                                             <td>{{ $rackoperadore->establecimiento->nombre_establecimiento}}</td>
                                             <td>
                                                 <form action="{{ route('rackoperadores.destroy',$rackoperadore->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('rackoperadores.show',$rackoperadore->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('rackoperadores.edit',$rackoperadore->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('rackoperadores.show',$rackoperadore->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('rackoperadores.edit',$rackoperadore->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Borrar') }}</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -71,7 +71,8 @@
                         </div>
                     </div>
                 </div>
-                {!! $rackoperadores->links() !!}
+                @include('pagination', ['paginator' => $rackoperadores])
+                {{-- {!! $rackoperadores->links() !!} --}}
             </div>
         </div>
     </div>

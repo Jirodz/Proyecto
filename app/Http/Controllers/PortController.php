@@ -102,6 +102,7 @@ class PortController extends Controller
      */
     public function destroy($id)
     {
+
         $port = Port::find($id)->delete();
 
         return redirect()->route('ports.index')

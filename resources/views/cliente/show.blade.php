@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Cliente</span>
+                            <span class="card-title">{{ __('Mostrar') }} Cliente</span>
                         </div>
 
                     </div>

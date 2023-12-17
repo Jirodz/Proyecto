@@ -27,6 +27,11 @@
             {!! $errors->first('nivel', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
+            {{ Form::label('operador') }}
+            {{ Form::select('operador_id',$operador, $enlace->operador_id, ['class' => 'form-control' . ($errors->has('operador_id') ? ' is-invalid' : ''), 'placeholder' => 'Operador']) }}
+            {!! $errors->first('operador_id', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
             {{ Form::label('tipo de local') }}
             {{ Form::select('tipolocal_id',$tipolocal, $enlace->tipolocal_id, ['class' => 'form-control' . ($errors->has('tipolocal_id') ? ' is-invalid' : ''), 'placeholder' => 'Tipo de local']) }}
             {!! $errors->first('tipolocal_id', '<div class="invalid-feedback">:message</div>') !!}
@@ -60,6 +65,16 @@
             {{ Form::label('puerto') }}
             {{ Form::select('port_id',$puerto, $enlace->port_id, ['class' => 'form-control' . ($errors->has('port_id') ? ' is-invalid' : ''), 'placeholder' => 'Puerto']) }}
             {!! $errors->first('port_id', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('odf_operador') }}
+            {{ Form::text('odf_operador', $enlace->odf_operador, ['class' => 'form-control' . ($errors->has('odf_operador') ? ' is-invalid' : ''), 'placeholder' => 'Odf Operador']) }}
+            {!! $errors->first('odf_operador', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
+            {{ Form::label('puerto_operador') }}
+            {{ Form::text('puerto_operador', $enlace->puerto_operador, ['class' => 'form-control' . ($errors->has('puerto_operador') ? ' is-invalid' : ''), 'placeholder' => 'Puerto Operador']) }}
+            {!! $errors->first('puerto_operador', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('responsable_operador') }}

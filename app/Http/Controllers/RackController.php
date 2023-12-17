@@ -48,7 +48,7 @@ class RackController extends Controller
         $rack = Rack::create($request->all());
 
         return redirect()->route('racks.index')
-            ->with('success', 'Rack created successfully.');
+            ->with('success', 'Rack creado exitosamente');
     }
 
     /**
@@ -91,7 +91,7 @@ class RackController extends Controller
         $rack->update($request->all());
 
         return redirect()->route('racks.index')
-            ->with('success', 'Rack updated successfully');
+            ->with('success', 'Rack actualizado exitosamente');
     }
 
     /**
@@ -101,9 +101,22 @@ class RackController extends Controller
      */
     public function destroy($id)
     {
-        $rack = Rack::find($id)->delete();
 
+        try{
+            $rack = Rack::findOrFail($id);
+            $rack->delete();
+
+            
         return redirect()->route('racks.index')
-            ->with('success', 'Rack deleted successfully');
+        ->with('success', 'Rack elimiando exitosamente');
+
+        } catch(\Illuminate\Database\QueryException $e){
+            
+        return redirect()->route('racks.index')
+        ->with('success', 'El rack esta vinculado a uno o varios registros');
+
+        }
+        
+
     }
 }

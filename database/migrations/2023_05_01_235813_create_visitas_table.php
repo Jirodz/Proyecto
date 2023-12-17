@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('observacion');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('establecimiento_id');
+            $table->foreign('establecimiento_id')->references('id')->on('establecimientos');
             $table->timestamps();
         });
     }

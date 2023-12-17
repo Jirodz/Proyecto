@@ -65,6 +65,7 @@
 </head>
 <body class="antialiased">
     <div class="welcome-container selection:bg-red-500 selection:text-white">
+        <img src="eye.PNG" alt="" width ="50px" height="50px" />
         @if (Route::has('login'))
             <div class="p-6">
                 @auth
@@ -74,6 +75,7 @@
                 @else
                     <div class="welcome-title">
                         ¡Bienvenido a Red Optima!
+                        
                     </div>
                     
                     <div class="welcome-buttons">
@@ -87,6 +89,12 @@
         @endif
 
     </div>
+
+    <style>
+        .container {
+    overflow-x: auto;
+}
+    </style>
 </body>
 </html>
 

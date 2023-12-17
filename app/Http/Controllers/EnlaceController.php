@@ -9,10 +9,13 @@ use App\Models\Tipo;
 use App\Models\Tipolocale;
 use App\Models\Locale;
 use App\Models\Odf;
+use App\Models\Operadore;
 use App\Models\Port;
-
+use App\Models\Visita;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Redirect;
+
 
 /**
  * Class EnlaceController
@@ -29,16 +32,36 @@ class EnlaceController extends Controller
     {
         // Obtener todos los establecimientos para la lista desplegable
         $establecimientos = Establecimiento::pluck('nombre_establecimiento', 'id');
-
+    
         // Obtener el establecimiento seleccionado (si existe)
         $selectedEstablecimiento = $request->input('establecimiento_id');
-
+    
         // Obtener los enlaces filtrados por establecimiento si se seleccionó uno
         $enlaces = Enlace::when($selectedEstablecimiento, function ($query) use ($selectedEstablecimiento) {
             return $query->where('establecimiento_id', $selectedEstablecimiento);
         });
-
-        // Aquí puedes agregar las condiciones adicionales según los parámetros de búsqueda
+    
+        // Nuevos campos de búsqueda por intervalo de tiempo
+        if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
+            $fechaInicio = $request->input('fecha_inicio');
+            $fechaFin = $request->input('fecha_fin');
+    
+            $enlaces->where(function ($query) use ($selectedEstablecimiento, $fechaInicio, $fechaFin) {
+                // Aplicar el filtro por establecimiento si se seleccionó uno
+                if ($selectedEstablecimiento) {
+                    $query->where('establecimiento_id', $selectedEstablecimiento);
+                }
+    
+                // Aplicar el filtro por fecha
+                $query->whereBetween('created_at', [$fechaInicio, $fechaFin])
+                    ->orWhere(function ($query) use ($fechaInicio, $fechaFin) {
+                        $query->where('created_at', '>=', $fechaInicio)
+                            ->where('created_at', '<=', $fechaFin);
+                    });
+            });
+        }
+    
+        // Condiciones de búsqueda adicionales
         if ($negocio = $request->input('negocio')) {
             $enlaces->where('negocio', 'LIKE', "%$negocio%");
         }
@@ -48,15 +71,34 @@ class EnlaceController extends Controller
                 $subQuery->where('numero_local', 'LIKE', "%$numeroLocal%");
             });
         }
-
-        // ... Agregar más condiciones según sea necesario
-
+    
+        // Ordenar por la columna updated_at de manera descendente
+        $enlaces->orderBy('updated_at', 'desc');
+    
         // Paginar los resultados
         $enlaces = $enlaces->paginate(10);
-
+    
         // Pasar variables a la vista
         return view('enlace.index', compact('enlaces', 'establecimientos', 'selectedEstablecimiento'))
             ->with('i', ($request->input('page', 1) - 1) * $enlaces->perPage());
+    }
+    
+    
+    
+
+    public function pdf(Request $request)
+    {
+        $establecimiento_id = $request->establecimiento_id;
+        
+        // Verificar si se proporcionó un establecimiento_id válido
+        if ($establecimiento_id) {
+            $enlaces = Enlace::where('establecimiento_id', $establecimiento_id)->paginate();
+        } else {
+            $enlaces = Enlace::paginate();
+        }
+
+        $pdf = Pdf::loadView('enlace.pdf', compact('enlaces'));
+        return $pdf->download('conexiones.pdf');
     }
 
     /**
@@ -70,6 +112,7 @@ class EnlaceController extends Controller
         $enlace = new Enlace();
         $tipolocal = Tipolocale::pluck('tipo_de_local','id');
         $tipodered = Tipo::pluck('tipo_de_red','id');
+        $operador = Operadore::pluck('operador','id');
         $cliente = Cliente::pluck('nombre','id');
         $establecimiento = Establecimiento::where('id', $establecimientoId)->pluck('nombre_establecimiento', 'id');
         $local = Locale::where('establecimiento_id', $establecimientoId)->pluck('numero_local', 'id');
@@ -78,7 +121,7 @@ class EnlaceController extends Controller
 
         
         
-        return view('enlace.create', compact('enlace','tipolocal','tipodered','cliente','establecimiento','local','odf','puerto'));
+        return view('enlace.create', compact('enlace','tipolocal','tipodered','cliente','establecimiento','local','odf','puerto','operador'));
     }
 
     /**
@@ -89,20 +132,39 @@ class EnlaceController extends Controller
      */
     public function store(Request $request)
     {
-        $rulesWithoutFecha = array_diff_key(Enlace::$rules, ['fecha' => '']);
 
-        $this->validate($request, $rulesWithoutFecha);
-
-        $enlace = Enlace::create($request->all());
-
+        // Continuar con el código existente para crear el nuevo enlace
+        $data = $request->all();
+    
+        // Agrega el valor para 'odf_operador' aquí, por ejemplo:
+        $data['odf_operador'] = $request->input('odf_operador');
+        $data['puerto_operador'] = $request->input('puerto_operador');
+    
+        $enlace = Enlace::create($data);
+    
         // Obtén el establecimiento_id del formulario o de la sesión, dependiendo de tu lógica.
         $establecimientoId = $request->input('establecimiento_id');
-
-     // Después de guardar, redirige al usuario a la página del establecimiento filtrado
+    
+        // Crear registro de visita con el número de puerto en la observación
+        $observacion = "Conexión ID: {$enlace->id} para: {$enlace->negocio}, contacto:{$enlace->nombre_contacto}, operador: {$enlace->operadore->operador}, 
+        ODF: {$enlace->odf->nombre_odf}, puerto: {$enlace->port->numero_puerto}, Local: {$enlace->locale->numero_local}
+        , tecnico de operador: {$enlace->responsable_operador}";
+    
+        Visita::create([
+            'tipo_visita' => 'Conexión creada',
+            'observacion' => $observacion,
+            'user_id' => auth()->id(),
+            'modelo_afectado' => 'Enlace',
+            'id_afectado' => $enlace->id,
+            'establecimiento_id' => $establecimientoId,
+        ]);
+    
+        // Después de guardar, redirige al usuario a la página del establecimiento filtrado
         return Redirect::route('enlaces.index', ['establecimiento_id' => $establecimientoId])
-         ->with('success', 'La actividad se ha efectuado correctamente.');
- }
-
+            ->with('success', 'Se ha creado una conexión correctamente.');
+    }
+    
+    
     /**
      * Display the specified resource.
      *
@@ -128,8 +190,7 @@ class EnlaceController extends Controller
         $tipolocal = Tipolocale::pluck('tipo_de_local', 'id');
         $tipodered = Tipo::pluck('tipo_de_red', 'id');
         $cliente = Cliente::pluck('nombre', 'id');
-        
-
+        $operador = Operadore::pluck('operador','id');
         $puerto = Port::pluck('numero_puerto', 'id');
     
         // Obtén el establecimiento asociado al enlace
@@ -140,7 +201,7 @@ class EnlaceController extends Controller
         $odf = Odf::where('establecimiento_id', $establecimientoId)->pluck('nombre_odf', 'id');
         $establecimiento = Establecimiento::where('id', $establecimientoId)->pluck('nombre_establecimiento', 'id');
     
-        return view('enlace.edit', compact('enlace', 'tipolocal', 'tipodered', 'cliente', 'establecimiento', 'local', 'odf', 'puerto'));
+        return view('enlace.edit', compact('enlace', 'tipolocal', 'tipodered', 'cliente', 'establecimiento', 'local', 'odf', 'puerto','operador'));
     }
     
 
@@ -153,16 +214,16 @@ class EnlaceController extends Controller
      */
     public function update(Request $request, Enlace $enlace)
     {
-        request()->validate(Enlace::$rules);
-
+        // Continuar con el código existente para actualizar el enlace
         $enlace->update($request->all());
-
+    
         $establecimientoId = $request->input('establecimiento_id');
-
-     // Después de guardar, redirige al usuario a la página del establecimiento filtrado
+    
+        // Después de actualizar, redirige al usuario a la página del establecimiento filtrado
         return Redirect::route('enlaces.index', ['establecimiento_id' => $establecimientoId])
-         ->with('success', 'La actividad se ha efectuado correctamente.');
+            ->with('success', 'Se ha actualizado el registro correctamente.');
     }
+    
 
     /**
      * @param int $id
@@ -171,9 +232,41 @@ class EnlaceController extends Controller
      */
     public function destroy($id)
     {
-        $enlace = Enlace::find($id)->delete();
-
-        return redirect()->route('enlaces.index')
-            ->with('success', 'Enlace deleted successfully');
+        // Obtén el enlace antes de borrarlo
+        $enlace = Enlace::find($id);
+    
+        // Verifica si el enlace existe
+        if (!$enlace) {
+            return redirect()->route('enlaces.index')->with('error', 'El enlace no existe.');
+        }
+    
+        // Obtén el establecimiento_id antes de borrar el enlace
+        $establecimientoId = $enlace->establecimiento_id;
+    
+        // Verifica si se pudo obtener el establecimiento_id
+        if (!$establecimientoId) {
+            return redirect()->route('enlaces.index')->with('error', 'No se pudo obtener el establecimiento_id.');
+        }
+    
+        // Borra el enlace
+        $enlace->delete();
+    
+        // Crea un registro en la tabla 'visitas' para la eliminación del enlace
+        Visita::create([
+            'tipo_visita' => 'Conexión eliminada',
+            'observacion' => "Conexión ID: {$enlace->id} para: {$enlace->negocio}, contacto:{$enlace->nombre_contacto}, 
+            operador: {$enlace->operadore->operador}, 
+            ODF: {$enlace->odf->nombre_odf}, puerto: {$enlace->port->numero_puerto}, Local: {$enlace->locale->numero_local},
+            tecnico de operador: {$enlace->responsable_operador}",
+            'user_id' => auth()->id(),
+            'modelo_afectado' => 'Enlace',
+            'id_afectado' => $id,
+            'establecimiento_id' => $establecimientoId,
+        ]);
+    
+        // Redirige al usuario de vuelta al establecimiento
+        return redirect()->route('enlaces.index', ['establecimiento_id' => $establecimientoId])
+            ->with('success', 'Se ha eliminado el registro correctamente');
     }
+    
 }

@@ -27,8 +27,8 @@
             {!! $errors->first('direccion', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('desarrolladora_id') }}
-            {{ Form::select('desarrolladora_id', $desarrolladoras, $establecimiento->desarrolladora_id, ['class' => 'form-control' . ($errors->has('desarrolladora_id') ? ' is-invalid' : ''), 'placeholder' => 'Desarrolladora Id']) }}
+            {{ Form::label('desarrolladora') }}
+            {{ Form::select('desarrolladora_id', $desarrolladoras, $establecimiento->desarrolladora_id, ['class' => 'form-control' . ($errors->has('desarrolladora_id') ? ' is-invalid' : ''), 'placeholder' => 'Desarrolladora']) }}
             {!! $errors->first('desarrolladora_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 

@@ -101,9 +101,17 @@ class DesarrolladoraController extends Controller
      */
     public function destroy($id)
     {
-        $desarrolladora = Desarrolladora::find($id)->delete();
+        try{
+            $desarrolladora = Desarrolladora::findOrFail($id);
+            $desarrolladora->delete();
 
-        return redirect()->route('desarrolladoras.index')
-            ->with('success', 'Desarrolladora deleted successfully');
+            return redirect()->route('desarrolladoras.index')
+            ->with('success', 'Desarrolladora eliminada exitosamente');
+
+        } catch(\Illuminate\Database\QueryException $e){
+
+            return redirect()->route('desarrolladoras.index')
+            ->with('success', 'La desarrolladora esta vinculada a uno o varios establecimientos');
+        }
     }
 }

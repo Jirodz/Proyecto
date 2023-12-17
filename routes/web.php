@@ -19,6 +19,8 @@ use App\Http\Controllers\EstablecimientoodfController;
 use App\Http\Controllers\TipolocaleController;
 use App\Http\Controllers\OdfController;
 use App\Http\Controllers\PortController;
+use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\VisitaController;
 use App\Models\Port;
 
 /*
@@ -35,6 +37,16 @@ use App\Models\Port;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('visitas', VisitaController::class)->names([
+    'index' => 'visita.index',
+    'create' => 'visita.create',
+    'store' => 'visita.store',
+    'show' => 'visita.show',
+    'edit' => 'visita.edit',
+    'update' => 'visita.update',
+    'destroy' => 'visita.destroy',
+]);
 
 Route::resource('ports', PortController::class)->names([
     'index' => 'ports.index',
@@ -159,6 +171,23 @@ Route::resource('enlaces', EnlaceController::class)->names([
     'destroy' => 'enlaces.destroy',
 ])->middleware('auth');
 
+Route::resource('visitas', VisitaController::class)->names([
+    'index'  => 'visitas.index',
+    'create' => 'visitas.create',
+    'store' => 'visitas.store',
+    'show' => 'visitas.show',
+    'edit' => 'visitas.edit',
+    'update' => 'visitas.update',
+    'destroy' => 'visitas.destroy',
+])->middleware('auth');
+
+
+
+
+Route::get('enlaces/pdf/{establecimiento_id?}', [EnlaceController::class, 'pdf'])->name('enlaces.pdf')->middleware('auth');
+
+
+
 
 
 Route::post('/operadores/{operadorId}/establecimientos/{establecimientoId}/vincular/{vincular}',
@@ -176,6 +205,12 @@ Route::post('odfoperadores/{odfoperadorId}/establecimientos/{establecimientoId}/
 
 // web.php
 Route::get('/puerto/{id}', 'PuertoController@show')->name('puerto.show');
+
+// Rutas para la bitácora
+
+
+
+
 
 
 

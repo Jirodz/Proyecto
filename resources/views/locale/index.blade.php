@@ -104,11 +104,11 @@
                                                 <td>{{ $locale->port->numero_puerto }}</td>
                                                 <td>
                                                     <form action="{{ route('locales.destroy',$locale->id) }}" method="POST">
-                                                        <a class="btn btn-sm btn-primary " href="{{ route('locales.show',$locale->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                        <a class="btn btn-sm btn-success" href="{{ route('locales.edit',$locale->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                        <a class="btn btn-sm btn-primary " href="{{ route('locales.show',$locale->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
+                                                        <a class="btn btn-sm btn-success" href="{{ route('locales.edit',$locale->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Borrar') }}</button>
                                                     </form>
                                                 </td>
                                             </tr>

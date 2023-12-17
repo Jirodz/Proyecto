@@ -16,7 +16,7 @@
                             </span>
                             <div class="float-right">
                                 <a href="{{ route('establecimientos.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                    {{ __('Create New') }}
+                                    {{ __('Crear nuevo') }}
                                 </a>
                             </div>
                         </div>
@@ -172,11 +172,11 @@
                                                 </style>
                                                 
                                                 <form action="{{ route('establecimientos.destroy', $establecimiento->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary btn-custom" href="{{ route('establecimientos.show', $establecimiento->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success btn-custom" href="{{ route('establecimientos.edit', $establecimiento->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                    <a class="btn btn-sm btn-primary btn-custom" href="{{ route('establecimientos.show', $establecimiento->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
+                                                    <a class="btn btn-sm btn-success btn-custom" href="{{ route('establecimientos.edit', $establecimiento->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm btn-custom"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm btn-custom"><i class="fa fa-fw fa-trash"></i> {{ __('Borrar') }}</button>
                                                 </form>
                                                 
                                             </td>
@@ -187,7 +187,8 @@
                         </div>
                     </div>
                 </div>
-                {!! $establecimientos->links() !!}
+                @include('pagination', ['paginator' => $establecimientos])
+              {{-- {!! $establecimientos->links() !!} --}}
             </div>
         </div>
     </div>
